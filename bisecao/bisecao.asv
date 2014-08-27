@@ -13,7 +13,7 @@ end
 
 if(a==b)
     display('Os valores devem ser diferentes');
-end
+else
             x=a;
         f_a = eval(funcao);
             x=b;
@@ -23,7 +23,7 @@ end
         if(resultado<0)
             c=(a+b)/2;
             erro= (b-a)/2;
-      iterator = 1; 
+        end
    while(erro>erro_final)
        x = c;
        f_c = eval(funcao);
@@ -34,16 +34,11 @@ end
        end
             c = (a+b)/2;
             erro = (b-a)/2;
-            eixo_x(iterator) = iterator;
-            eixo_y(iterator)= c;
-            iterator = iterator +1;
    end
-        plot(eixo_x,eixo_y);
+   
         display(['raiz:', num2str(c),'',char(177),'',num2str(erro)]);
-    else
-    display('Este não é um intervalo de valores válidos pois f(a)*f(b) deve ser negativo');
-end
-
+else
+    display('Este não é um intervalo de valores válidos pois f(a)*f(b) deve ser
                 
 
                 
