@@ -1,0 +1,19 @@
+function[soma, sub, prod, div] = operacoes(a, b)
+
+soma = qual_soma(a,b);
+sub = a-b;
+prod = a*b;
+div = a/b;
+end
+
+function resultado = qual_soma(a,b)
+
+resultado = a+b;
+end
+
+function resultado = qual_sub(a,b)
+
+resultado = a-b;
+end
+
+function resultado 
