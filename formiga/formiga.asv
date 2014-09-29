@@ -87,7 +87,8 @@ function move_button_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global pos_x incr dist;
-
+x0 = pos_x;
+y0 = x0^2;
 pos_x = pos_x+incr;
 
 if(pos_x>1)
@@ -98,11 +99,20 @@ if (pos_x<=1)
     
     x=0:0.05:1;
     y=x.^2;
+    
+    x1 = pos_x;
+    y1 = x1^2;
+    
     x2=[pos_x];
     y2=[pos_x^2];
+    
    
-    set(handles.x_obj, 'String', pos_x);
-    set(handles.y_obj, 'String', num2str(y2));
+    
+    texto_x = strcat('x: ', num2str(x2));
+    texto_y = strcat('y: ', num2str(y2));
+    
+    set(handles.x_obj, 'String', texto_x);
+    set(handles.y_obj, 'String', texto_y);
     
     plot(x,y,x2,y2,'o');
     
@@ -114,7 +124,21 @@ function reset_Callback(hObject, eventdata, handles)
 % hObject    handle to reset (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-pos_x 
+global pos_x incr dist;
+pos_x = 0;
+incr = 0.1;
+dist =0;
+x=0:0.05:1;
+y=x.^2;
+x2=[0];
+y2=[0];
+plot(x,y,x2,y2,'x');
+  texto_x = strcat('x: ', num2str(x2));
+    texto_y = strcat('y: ', num2str(y2));
+    
+    set(handles.x_obj, 'String', texto_x);
+    set(handles.y_obj, 'String', texto_y);
+    
 
 % --- Executes on selection change in incr_obj.
 function incr_obj_Callback(hObject, eventdata, handles)

@@ -87,7 +87,8 @@ function move_button_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global pos_x incr dist;
-
+x0 = pos_x;
+y0 = x0^2;
 pos_x = pos_x+incr;
 
 if(pos_x>1)
@@ -98,15 +99,22 @@ if (pos_x<=1)
     
     x=0:0.05:1;
     y=x.^2;
-    x2=[pos_x];
-    y2=[pos_x^2];
+    
+    x1 = pos_x;
+    y1 = x1^2;
+    
+    x2=[x1];
+    y2=[y1];
+    
+    dist = sqrt((x1-x0)^2+(y1-y0)^2);
    
+    
     texto_x = strcat('x: ', num2str(x2));
     texto_y = strcat('y: ', num2str(y2));
-    
+    texto_dist = num2str(dist);
     set(handles.x_obj, 'String', texto_x);
     set(handles.y_obj, 'String', texto_y);
-    
+    set(handles.dist_obj, 'String', texto_dist);
     plot(x,y,x2,y2,'o');
     
     
