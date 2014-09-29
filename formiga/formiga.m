@@ -89,6 +89,10 @@ function move_button_Callback(hObject, eventdata, handles)
 global pos_x incr dist;
 x0 = pos_x;
 y0 = x0^2;
+
+valor= get(handles.incr_obj,'Value');
+list_incr = [0.5 0.25 0.2 0.1]
+incr = list_incr(valor);
 pos_x = pos_x+incr;
 
 if(pos_x>1)
@@ -106,7 +110,7 @@ if (pos_x<=1)
     x2=[x1];
     y2=[y1];
     
-    dist = sqrt((x1-x0)^2+(y1-y0)^2);
+    dist = dist+ sqrt((x1-x0)^2+(y1-y0)^2);
    
     
     texto_x = strcat('x: ', num2str(x2));
@@ -136,10 +140,10 @@ y2=[0];
 plot(x,y,x2,y2,'x');
   texto_x = strcat('x: ', num2str(x2));
     texto_y = strcat('y: ', num2str(y2));
-    
+    texto_dist = num2str(dist);
     set(handles.x_obj, 'String', texto_x);
     set(handles.y_obj, 'String', texto_y);
-    
+    set(handles.dist_obj, 'String', texto_dist);
 
 % --- Executes on selection change in incr_obj.
 function incr_obj_Callback(hObject, eventdata, handles)
