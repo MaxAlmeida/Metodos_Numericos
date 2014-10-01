@@ -57,15 +57,25 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
-global pos_x incr dist;
+global pos_x incr dist xpol ypol;
 pos_x = 0;
 incr = 0.1;
-dist =0;
+
+    
 x=0:0.05:1;
 y=x.^2;
 x2=[0];
 y2=[0];
-plot(x,y,x2,y2,'x');
+xpol = [0];
+ypol = [0];
+hold on;
+plot(x,y);
+plot(x2,y2,'-mo','MarkerFaceColor','r');
+
+hold off;
+
+
+
 % UIWAIT makes formiga wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
@@ -100,6 +110,8 @@ if(pos_x>1)
 end
     
 if (pos_x<=1)
+    x0 = pos_x;
+    y0 = x0^2;
     
     x=0:0.05:1;
     y=x.^2;
@@ -119,8 +131,23 @@ if (pos_x<=1)
     set(handles.x_obj, 'String', texto_x);
     set(handles.y_obj, 'String', texto_y);
     set(handles.dist_obj, 'String', texto_dist);
-    plot(x,y,x2,y2,'o');
+    cla;
+    hold on;
+    plot(x,y);
+    plot(x2,y2,'-mo','MarkerFaceColor','r');
+    hold off;  
     
+    x=0:0.1:1;
+    y=x.^2;
+    tam = length(xpol);
+    xpol(tam+1) = x1;
+    ypol(tam+1) = y1;
+      
+    hold on;    
+    for i=1:tam
+        patch([xpol(i) xpol(i) xpol(i+1) xpol(i+1)],[0 ypol(i) ypol(i+1) 0],'c');
+    end
+    hold off;     
     
     
 end
