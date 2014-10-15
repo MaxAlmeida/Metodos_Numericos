@@ -57,10 +57,11 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
-global pos_x incr dist xpol ypol;
+global pos_x incr dist xpol ypol area;
+area = 0;
 pos_x = 0;
+dist=0;
 incr = 0.1;
-
     
 x=0:0.05:1;
 y=x.^2;
@@ -96,10 +97,10 @@ function move_button_Callback(hObject, eventdata, handles)
 % hObject    handle to move_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global pos_x incr dist;
+global pos_x incr dist area xpol ypol;
+
 x0 = pos_x;
 y0 = x0^2;
-
 valor= get(handles.incr_obj,'Value');
 list_incr = [0.5 0.25 0.2 0.1]
 incr = list_incr(valor);
@@ -112,25 +113,33 @@ end
 if (pos_x<=1)
     x0 = pos_x;
     y0 = x0^2;
-    
+    xpol = 0;
     x=0:0.05:1;
     y=x.^2;
     
-    x1 = pos_x;
+    x1 = pos_x + incr;
     y1 = x1^2;
     
     x2=[x1];
     y2=[y1];
     
-    dist = dist+ sqrt((x1-x0)^2+(y1-y0)^2);
-   
-    
+    dist = dist + sqrt((x1-x0)^2 + (y1-y0)^2);
+    area = area + (x1-x0)*(y0+y1)/2;
+    display(x1);
+    display(x0);
+    display(y1);
+    display(y0);
+    display(sqrt((x1-x0)^2 + (y1-y0)^2));
+    display(dist);
+    display(area);
     texto_x = strcat('x: ', num2str(x2));
     texto_y = strcat('y: ', num2str(y2));
+    texto_area = num2str(area);
     texto_dist = num2str(dist);
     set(handles.x_obj, 'String', texto_x);
     set(handles.y_obj, 'String', texto_y);
     set(handles.dist_obj, 'String', texto_dist);
+    set(handles.area_obj, 'String', texto_area);
     cla;
     hold on;
     plot(x,y);
@@ -156,7 +165,10 @@ function reset_Callback(hObject, eventdata, handles)
 % hObject    handle to reset (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global pos_x incr dist;
+global pos_x incr dist xpol ypol area
+area =0;
+xpol = [0];
+ypol = [0];
 pos_x = 0;
 incr = 0.1;
 dist =0;
@@ -171,6 +183,7 @@ plot(x,y,x2,y2,'x');
     set(handles.x_obj, 'String', texto_x);
     set(handles.y_obj, 'String', texto_y);
     set(handles.dist_obj, 'String', texto_dist);
+    set(handles.area_obj, 'String', '0');
 
 % --- Executes on selection change in incr_obj.
 function incr_obj_Callback(hObject, eventdata, handles)
