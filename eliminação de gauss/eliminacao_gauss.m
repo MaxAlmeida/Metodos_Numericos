@@ -10,12 +10,12 @@ x(n) = b(n)/a(n,n);
         s = 0;
         
     
-    for j=(i+1):n
-        s = s + a(i,j)*x(j);
+    for j=(i+1):1:n
+        s = s + a(i,j)*x(j)
            
     end
     
-    x(i) = (b(i)-s)/a(i,i);
+    x(i) = (b(i)-s)/a(i,i)
     
     end
 

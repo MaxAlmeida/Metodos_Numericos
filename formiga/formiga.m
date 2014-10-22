@@ -97,12 +97,12 @@ function move_button_Callback(hObject, eventdata, handles)
 % hObject    handle to move_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global pos_x incr dist area xpol ypol;
-
+global pos_x incr dist area xpol ypol ;
 x0 = pos_x;
 y0 = x0^2;
+
 valor= get(handles.incr_obj,'Value');
-list_incr = [0.5 0.25 0.2 0.1]
+list_incr = [0.5 0.25 0.2 0.1 0.05 0.01]
 incr = list_incr(valor);
 pos_x = pos_x+incr;
 
@@ -113,29 +113,31 @@ end
 if (pos_x<=1)
     x0 = pos_x;
     y0 = x0^2;
-    xpol = 0;
+    
     x=0:0.05:1;
     y=x.^2;
     
-    x1 = pos_x + incr;
+    x1 = pos_x+incr;
     y1 = x1^2;
     
     x2=[x1];
     y2=[y1];
     
-    dist = dist + sqrt((x1-x0)^2 + (y1-y0)^2);
-    area = area + (x1-x0)*(y0+y1)/2;
-    display(x1);
-    display(x0);
+   dist = dist + sqrt(( x1-x0)^2 + (y1-y0)^2);
+   display(dist);
+   display(x1);
+   display(x0);
     display(y1);
-    display(y0);
-    display(sqrt((x1-x0)^2 + (y1-y0)^2));
-    display(dist);
-    display(area);
+   display(y0);
+   
+   area = area + (x1-x0)*(y1-y0)/2;
+   
+    
     texto_x = strcat('x: ', num2str(x2));
     texto_y = strcat('y: ', num2str(y2));
     texto_area = num2str(area);
     texto_dist = num2str(dist);
+    
     set(handles.x_obj, 'String', texto_x);
     set(handles.y_obj, 'String', texto_y);
     set(handles.dist_obj, 'String', texto_dist);

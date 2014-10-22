@@ -1,10 +1,14 @@
 %Método 1/3 de simpson
 
-funcao = '2x + 3';
-x = 6;
-y0 = eval(funcao);
+funcao = input('Digite a função: ');
+f = inline(funcao);
+
+x0 = input('Digite o primeiro ponto: ');
+y0 = f(x0);
+x2 = input('Digite o segundo ponto: ');
+y2 = f(x2);
 x = 12;
-y2 = eval(funcao);
+y2 = f(x2);
 n = input ('Insira uma quantidade de pontos');
 
     if( mod(n,2)~= 0)
