@@ -22,7 +22,7 @@ function varargout = formiga(varargin)
 
 % Edit the above text to modify the response to help formiga
 
-% Last Modified by GUIDE v2.5 29-Sep-2014 17:22:58
+% Last Modified by GUIDE v2.5 22-Oct-2014 17:08:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -57,14 +57,14 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
-global pos_x incr dist xpol ypol area;
+global pos_x incr dist xpol ypol area func;
 area = 0;
 pos_x = 0;
 dist=0;
 incr = 0.1;
     
 x=0:0.05:1;
-y=x.^2;
+y=sin(x);
 x2=[0];
 y2=[0];
 xpol = [0];
@@ -97,12 +97,17 @@ function move_button_Callback(hObject, eventdata, handles)
 % hObject    handle to move_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global pos_x incr dist area xpol ypol;
-
+global pos_x incr dist area xpol ypol ;
 x0 = pos_x;
-y0 = x0^2;
+y0 = sin(x0);
+
+func_value = get(handles.functions,'Value');
 valor= get(handles.incr_obj,'Value');
-list_incr = [0.5 0.25 0.2 0.1]
+
+list_incr = [0.5 0.25 0.2 0.1 0.05 0.01]
+list_functions =['sen(x)' 'exp(x)' 'cos(x)'];
+
+selected_function = list_functions(func_value);
 incr = list_incr(valor);
 pos_x = pos_x+incr;
 
@@ -111,27 +116,28 @@ if(pos_x>1)
 end
     
 if (pos_x<=1)
+    f = inline(selected_function);
     x0 = pos_x;
-    y0 = x0^2;
-    xpol = 0;
-    x=0:0.05:1;
-    y=x.^2;
+    y0 = f(x0);
     
-    x1 = pos_x + incr;
-    y1 = x1^2;
+    x=0:0.05:1;
+    y=selected_function;
+    
+    x1 = pos_x+incr;
+    y1 = f(x1);
     
     x2=[x1];
     y2=[y1];
     
-    dist = dist + sqrt((x1-x0)^2 + (y1-y0)^2);
-    area = area + (x1-x0)*(y0+y1)/2;
-    display(x1);
-    display(x0);
+   dist = dist + sqrt(( x1-x0)^2 + (y1-y0)^2);
+   display(dist);
+   display(x1);
+   display(x0);
     display(y1);
-    display(y0);
-    display(sqrt((x1-x0)^2 + (y1-y0)^2));
-    display(dist);
-    display(area);
+   display(y0);
+   
+   area = area + (x1-x0)*(y1-y0)/2;
+   
     
     texto_x = strcat('x: ', num2str(x2));
     texto_y = strcat('y: ', num2str(y2));
@@ -208,5 +214,41 @@ function incr_obj_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+
+
+% --- Executes on selection change in functions.
+function functions_Callback(hObject, eventdata, handles)
+% hObject    handle to functions (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns functions contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from functions
+
+
+% --- Executes during object creation, after setting all properties.
+function functions_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to functions (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+
+% --- Executes on button press in select_function.
+function select_function_Callback(hObject, eventdata, handles)
+% hObject    handle to select_function (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
 
 
